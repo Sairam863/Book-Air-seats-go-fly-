@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkyWings | Flight Booking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-inner container">
+      <a class="logo" href="#home" aria-label="SkyWings Home">
+        <span class="logo-mark">✈</span>
+        <span>SkyWings</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#flights">Flights</a>
+        <a href="#deals">Deals</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-carousel" aria-label="Travel image carousel">
+        <div class="slide active">
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1600&q=80" alt="Airplane flying above clouds">
+          <div class="slide-overlay"></div>
+        </div>
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1600&q=80" alt="Airport interior with travelers">
+          <div class="slide-overlay"></div>
+        </div>
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80" alt="Travel destination beach view">
+          <div class="slide-overlay"></div>
+        </div>
+
+        <button class="carousel-btn prev" id="prevSlide" aria-label="Previous slide">‹</button>
+        <button class="carousel-btn next" id="nextSlide" aria-label="Next slide">›</button>
+
+        <div class="carousel-dots" id="carouselDots" aria-label="Slide navigation"></div>
+      </div>
+
+      <div class="hero-content container">
+        <div class="hero-copy">
+          <p class="eyebrow">Book smarter. Fly better.</p>
+          <h1>Find your next flight in seconds.</h1>
+          <p class="hero-text">
+            Search realistic flight options, compare fares, and book instantly with a smooth travel-booking experience.
+          </p>
+        </div>
+
+        <section class="search-card" aria-labelledby="searchHeading">
+          <h2 id="searchHeading">Search Flights</h2>
+          <form id="searchForm" class="search-form">
+            <div class="form-grid">
+              <label>
+                From
+                <input type="text" id="from" placeholder="Hyderabad" required />
+              </label>
+              <label>
+                To
+                <input type="text" id="to" placeholder="Dubai" required />
+              </label>
+              <label>
+                Departure Date
+                <input type="date" id="departureDate" required />
+              </label>
+              <label>
+                Return Date
+                <input type="date" id="returnDate" />
+              </label>
+              <label>
+                Passengers
+                <select id="passengers">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                </select>
+              </label>
+              <label>
+                Class
+                <select id="travelClass">
+                  <option>Economy</option>
+                  <option>Business</option>
+                </select>
+              </label>
+            </div>
+            <button type="submit" class="primary-btn">Search Flights</button>
+          </form>
+        </section>
+      </div>
+    </section>
+
+    <section class="results-section container" id="flights">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Flights</p>
+          <h2>Available flight options</h2>
+        </div>
+        <p class="results-count" id="resultsCount">Showing all available flights</p>
+      </div>
+
+      <div class="filters">
+        <label>
+          Price Range
+          <input type="range" id="priceFilter" min="100" max="1200" value="1200" />
+          <span id="priceValue">$1200 max</span>
+        </label>
+
+        <label>
+          Departure Time
+          <select id="timeFilter">
+            <option value="all">All times</option>
+            <option value="morning">Morning (5am - 12pm)</option>
+            <option value="afternoon">Afternoon (12pm - 5pm)</option>
+            <option value="evening">Evening (5pm - 10pm)</option>
+            <option value="night">Night (10pm - 5am)</option>
+          </select>
+        </label>
+
+        <label>
+          Airline
+          <select id="airlineFilter">
+            <option value="all">All airlines</option>
+          </select>
+        </label>
+
+        <label>
+          Sort By
+          <select id="sortBy">
+            <option value="recommended">Recommended</option>
+            <option value="priceLow">Price: Low to High</option>
+            <option value="priceHigh">Price: High to Low</option>
+            <option value="durationShort">Duration: Shortest</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="loading" id="loading" hidden>
+        <div class="spinner"></div>
+        <p>Searching flights...</p>
+      </div>
+
+      <div class="flight-grid" id="flightResults" aria-live="polite"></div>
+    </section>
+
+    <section class="deals-section" id="deals">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Deals / Offers</p>
+            <h2>Special travel offers</h2>
+          </div>
+        </div>
+
+        <div class="deals-grid">
+          <article class="deal-card">
+            <h3>Summer Saver</h3>
+            <p>Up to 25% off on select international routes.</p>
+          </article>
+          <article class="deal-card">
+            <h3>Business Class Upgrade</h3>
+            <p>Upgrade for less on weekend departures.</p>
+          </article>
+          <article class="deal-card">
+            <h3>Family Getaway</h3>
+            <p>Extra baggage and seat selection included.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contact">
+    <div class="container footer-grid">
+      <div>
+        <a class="logo footer-logo" href="#home">
+          <span class="logo-mark">✈</span>
+          <span>SkyWings</span>
+        </a>
+        <p>Modern flight booking experiences for travelers who want speed, clarity, and comfort.</p>
+      </div>
+
+      <div>
+        <h3>Links</h3>
+        <a href="#home">Home</a>
+        <a href="#flights">Flights</a>
+        <a href="#deals">Deals</a>
+      </div>
+
+      <div>
+        <h3>Contact</h3>
+        <a href="mailto:support@skywings.com">support@skywings.com</a>
+        <a href="tel:+911234567890">+91 12345 67890</a>
+      </div>
+
+      <div>
+        <h3>Social</h3>
+        <div class="social">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">⌁</a>
+          <a href="#" aria-label="X">𝕏</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal" id="bookingModal" aria-hidden="true" role="dialog" aria-labelledby="bookingTitle">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModal" aria-label="Close booking form">×</button>
+      <h2 id="bookingTitle">Complete your booking</h2>
+      <div class="booking-summary" id="bookingSummary"></div>
+
+      <form id="bookingForm" class="booking-form">
+        <label>
+          Full Name
+          <input type="text" id="fullName" required />
+        </label>
+        <label>
+          Email
+          <input type="email" id="email" required />
+        </label>
+        <label>
+          Phone
+          <input type="tel" id="phone" required />
+        </label>
+        <button type="submit" class="primary-btn">Confirm Booking</button>
+      </form>
+
+      <div class="confirmation" id="confirmation" hidden>
+        <h3>Booking Confirmed</h3>
+        <p>Your itinerary has been reserved successfully.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
